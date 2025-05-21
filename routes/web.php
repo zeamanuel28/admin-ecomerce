@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController; // <-- ADD THIS LINE
+use App\Http\Controllers\OrderController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -40,4 +41,9 @@ Route::middleware('auth')->group(function () {
     // ------------------------------------------
 });
 
+ // --- ORDER MANAGEMENT ROUTES ---
+// Now including 'create' and 'store' for the OrderController
+Route::resource('orders', OrderController::class)->only(['index', 'show', 'create', 'store']);
+Route::patch('/orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
+// -
 require __DIR__.'/auth.php';
